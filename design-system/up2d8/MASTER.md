@@ -7,202 +7,127 @@
 ---
 
 **Project:** Up2D8
-**Generated:** 2026-08-02 18:31:13
-**Category:** Productivity Tool
+**Updated:** 2026-08-03
+**Category:** Student Productivity (Mobile App)
+**Aesthetic:** Monochrome Mastery — Pure black/white/gray. Color is functional, never decorative.
 
 ---
 
 ## Global Rules
 
-### Color Palette
+### Color Palette (Dark Mode — Default)
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#4338CA` | `--color-primary` |
-| On Primary | `#FFFFFF` | `--color-on-primary` |
-| Secondary | `#6366F1` | `--color-secondary` |
-| Accent/CTA | `#7C3AED` | `--color-accent` |
-| Background | `#0F172A` | `--color-background` |
-| Foreground | `#FFFFFF` | `--color-foreground` |
-| Muted | `#131936` | `--color-muted` |
-| Border | `rgba(255,255,255,0.08)` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| Ring | `#4338CA` | `--color-ring` |
+| Background | `#000000` | `--bg` |
+| Surface | `#111111` | `--surface` |
+| Surface Raised | `#1C1C1E` | `--surface-raised` |
+| Border | `#2C2C2E` | `--border` |
+| Text Primary | `#FFFFFF` | `--text-primary` |
+| Text Secondary | `#8E8E93` | `--text-secondary` |
+| Text Tertiary | `#48484A` | `--text-tertiary` |
 
-**Color Notes:** Night indigo + dream violet on dark
+### Color Palette (Light Mode)
 
-### Typography
+| Role | Hex | CSS Variable |
+|------|-----|--------------|
+| Background | `#FFFFFF` | `--bg` |
+| Surface | `#F2F2F7` | `--surface` |
+| Surface Raised | `#FFFFFF` | `--surface-raised` |
+| Border | `#E5E5EA` | `--border` |
+| Text Primary | `#000000` | `--text-primary` |
+| Text Secondary | `#8E8E93` | `--text-secondary` |
+| Text Tertiary | `#C7C7CC` | `--text-tertiary` |
 
-- **Heading Font:** Inter
-- **Body Font:** Inter
-- **Mood:** dark, cinematic, technical, precision, clean, premium, developer, professional, high-end utility
-- **Google Fonts:** [Inter + Inter](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)
+### User-Selectable Accent Colors
 
-**CSS Import:**
-```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+| Name | Hex | Variable |
+|------|-----|----------|
+| Graphite (default) | `#8E8E93` | `--accent` |
+| Tomato | `#FF3B30` | `--accent` |
+| Ocean | `#007AFF` | `--accent` |
+| Mint | `#34C759` | `--accent` |
+| Amethyst | `#AF52DE` | `--accent` |
+| Tangerine | `#FF9500` | `--accent` |
+
+**Accent applies to:** Active tab indicator, primary action buttons, category badge dots, confirm actions only.
+
+### Typography (Inter Variable — iOS HIG Scale)
+
+| Role | Size | Weight | Line Height |
+|------|------|--------|-------------|
+| Screen Title | `34px` | Bold (700) | `41px` |
+| Section Header | `22px` | Bold (700) | `28px` |
+| Task Title | `17px` | Regular (400) | `22px` |
+| Body | `15px` | Regular (400) | `20px` |
+| Caption | `13px` | Regular (400) | `18px` |
+| Micro Badge | `11px` | Medium (500) | `13px` |
+
+**Google Fonts:**
+```
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 ```
 
-### Spacing Variables
+### Spacing
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-xs` | `4px` / `0.25rem` | Tight gaps |
-| `--space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
-| `--space-md` | `16px` / `1rem` | Standard padding |
-| `--space-lg` | `24px` / `1.5rem` | Section padding |
-| `--space-xl` | `32px` / `2rem` | Large gaps |
-| `--space-2xl` | `48px` / `3rem` | Section margins |
-| `--space-3xl` | `64px` / `4rem` | Hero padding |
+| Token | Value |
+|-------|-------|
+| `--space-xs` | `4px` |
+| `--space-sm` | `8px` |
+| `--space-md` | `16px` |
+| `--space-lg` | `24px` |
+| `--space-xl` | `32px` |
 
-### Shadow Depths
+### Border Radius
 
-| Level | Value | Usage |
-|-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
-| `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
-
----
-
-## Component Specs
-
-### Buttons
-
-```css
-/* Primary Button */
-.btn-primary {
-  background: #7C3AED;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #4338CA;
-  border: 2px solid #4338CA;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-```
-
-### Cards
-
-```css
-.card {
-  background: #0F172A;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-```
-
-### Inputs
-
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
-
-.input:focus {
-  border-color: #4338CA;
-  outline: none;
-  box-shadow: 0 0 0 3px #4338CA20;
-}
-```
-
-### Modals
-
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-}
-```
+| Token | Value |
+|-------|-------|
+| `--radius-sm` | `8px` |
+| `--radius-md` | `12px` |
+| `--radius-lg` | `16px` |
+| `--radius-pill` | `999px` |
 
 ---
 
 ## Style Guidelines
 
-**Style:** Micro-interactions
+**Style:** Monochrome Mastery
+**Inspiration:** Things 3, Cron/Notion Calendar, Apple Reminders iOS 18, Amie, Structured, Todoist
+**Keywords:** Monochrome, minimal, native-feeling, tactile, whitespace-driven, OLED-friendly
+**Best For:** Mobile productivity apps, student tools, task managers, calendar apps
 
-**Keywords:** Small animations, gesture-based, tactile feedback, subtle animations, contextual interactions, responsive
-
-**Best For:** Mobile apps, touchscreen UIs, productivity tools, user-friendly, consumer apps, interactive components
-
-**Key Effects:** Small hover (50-100ms), loading spinners, success/error state anim, gesture-triggered (swipe/pinch), haptic
-
-### Page Pattern
-
-**Pattern Name:** Event/Conference Landing
-
-- **Conversion Strategy:** Early bird pricing with deadline. Social proof (past attendees). Speaker credibility. Multi-ticket discounts.
-- **CTA Placement:** Register CTA sticky + After speakers + Bottom
-- **Section Order:** 1. Hero (date/location/countdown), 2. Speakers grid, 3. Agenda/schedule, 4. Sponsors, 5. Register CTA
+### Key Principles
+- Beauty comes from clarity, whitespace, and typography — not gradients or color.
+- Color is data (category dots, urgency indicators), never decoration.
+- Every micro-interaction has haptic feedback for tactile satisfaction.
+- The app feels like a premium physical planner, not a cluttered dashboard.
 
 ---
 
 ## Anti-Patterns (Do NOT Use)
 
-- ❌ Complex onboarding
-- ❌ Slow performance
-
-### Additional Forbidden Patterns
-
-- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)
-- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer
-- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout
-- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio
-- ❌ **Instant state changes** — Always use transitions (150-300ms)
-- ❌ **Invisible focus states** — Focus states must be visible for a11y
+- ❌ Gradient blobs or glowing neon borders
+- ❌ Emojis as functional icons (use Lucide SVG)
+- ❌ Robot/AI copy — every string must be friendly and human
+- ❌ Purple/cyan/magenta cyberpunk colors in default theme
+- ❌ Navy or dark blue backgrounds (use true black `#000000`)
+- ❌ Color used decoratively (only functional)
+- ❌ Instant state changes without transitions (use 150-200ms ease-out)
+- ❌ Low contrast text below 4.5:1 ratio
+- ❌ Animations that ignore `prefers-reduced-motion`
 
 ---
 
 ## Pre-Delivery Checklist
 
-Before delivering any UI code, verify:
-
-- [ ] No emojis used as icons (use SVG instead)
-- [ ] All icons from consistent icon set (Heroicons/Lucide)
-- [ ] `cursor-pointer` on all clickable elements
-- [ ] Hover states with smooth transitions (150-300ms)
-- [ ] Light mode: text contrast 4.5:1 minimum
-- [ ] Focus states visible for keyboard navigation
+- [ ] No gradient blobs or neon anywhere
+- [ ] All icons from Lucide (consistent SVG set)
+- [ ] Every string is friendly, human, conversational
+- [ ] Background is `#000000` (dark) or `#FFFFFF` (light)
+- [ ] Accent color used only for active states and buttons
+- [ ] Typography follows iOS HIG scale
+- [ ] Every interactive element has haptic response
+- [ ] 4.5:1 contrast ratio on all text
 - [ ] `prefers-reduced-motion` respected
-- [ ] Responsive: 375px, 768px, 1024px, 1440px
-- [ ] No content hidden behind fixed navbars
-- [ ] No horizontal scroll on mobile
+- [ ] Touch targets minimum 44×44px
+- [ ] Widgets follow native platform design language

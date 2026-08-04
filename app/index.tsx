@@ -9,11 +9,21 @@ export default function DraftsInbox() {
   return (
     <SafeAreaView className="flex-1 bg-bg" edges={['top']}>
       <View className="flex-row items-center justify-between px-md py-md border-b border-border z-40">
-        <Pressable className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" onPress={() => Haptics.selectionAsync()}>
+        <Pressable 
+          className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" 
+          onPress={() => Haptics.selectionAsync()}
+          accessibilityRole="button"
+          accessibilityLabel="Open menu"
+        >
           <MaterialIcons name="menu" size={24} color="#FFFFFF" />
         </Pressable>
         <Text className="text-[22px] font-bold tracking-tight text-text-primary">Drafts</Text>
-        <Pressable className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" onPress={() => Haptics.selectionAsync()}>
+        <Pressable 
+          className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" 
+          onPress={() => Haptics.selectionAsync()}
+          accessibilityRole="button"
+          accessibilityLabel="More options"
+        >
           <MaterialIcons name="more-vert" size={24} color="#FFFFFF" />
         </Pressable>
       </View>
@@ -23,7 +33,10 @@ export default function DraftsInbox() {
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         <View className="mb-lg">
-          <Text className="text-[15px] text-text-secondary leading-snug">
+          <Text 
+            className="text-[15px] text-text-secondary leading-snug"
+            accessibilityRole="text"
+          >
             Review and confirm AI-extracted deadlines before they hit your calendar.
           </Text>
         </View>

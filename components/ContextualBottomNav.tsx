@@ -47,7 +47,7 @@ export function ContextualBottomNav({ primaryLabel, primaryIcon, onPrimaryPress,
         accessibilityLabel={leftItem.label}
       >
         <MaterialIcons name={leftItem.icon} size={24} color={colors.textSecondary} />
-        <Text className="text-[11px] font-medium text-text-secondary mt-1">{leftItem.label}</Text>
+        <Text className="text-[11px] font-medium text-text-secondary mt-1" style={{ letterSpacing: 0.06 }}>{leftItem.label}</Text>
       </Pressable>
 
       <Pressable 
@@ -57,7 +57,7 @@ export function ContextualBottomNav({ primaryLabel, primaryIcon, onPrimaryPress,
         accessibilityLabel={primaryLabel}
       >
         {primaryIcon && <MaterialIcons name={primaryIcon} size={18} color={colors.bg} />}
-        <Text className="text-bg font-semibold text-[15px]">{primaryLabel}</Text>
+        <Text className="text-bg font-semibold text-[15px]" style={{ letterSpacing: -0.24 }}>{primaryLabel}</Text>
       </Pressable>
 
       <Pressable 
@@ -67,7 +67,7 @@ export function ContextualBottomNav({ primaryLabel, primaryIcon, onPrimaryPress,
         accessibilityLabel={rightItem.label}
       >
         <MaterialIcons name={rightItem.icon} size={24} color={colors.textSecondary} />
-        <Text className="text-[11px] font-medium text-text-secondary mt-1">{rightItem.label}</Text>
+        <Text className="text-[11px] font-medium text-text-secondary mt-1" style={{ letterSpacing: 0.06 }}>{rightItem.label}</Text>
       </Pressable>
     </View>
   );

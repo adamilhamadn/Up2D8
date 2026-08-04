@@ -20,7 +20,7 @@ export default function DraftsInbox() {
         >
           <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
         </Pressable>
-        <Text className="text-[22px] font-bold tracking-tight text-text-primary">Drafts</Text>
+        <Text className="text-[22px] font-bold tracking-tight text-text-primary" style={{ letterSpacing: 0.35 }}>Drafts</Text>
         <Pressable 
           className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" 
           onPress={() => Haptics.selectionAsync()}
@@ -39,6 +39,7 @@ export default function DraftsInbox() {
           <Text 
             className="text-[15px] text-text-secondary leading-snug"
             accessibilityRole="text"
+            style={{ letterSpacing: -0.24 }}
           >
             Review and confirm AI-extracted deadlines before they hit your calendar.
           </Text>

@@ -128,14 +128,14 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
                 />
               )}
               <View>
-                <Text className="text-[17px] font-medium leading-tight text-text-primary">{title}</Text>
+                <Text className="text-[17px] font-medium leading-tight text-text-primary" style={{ letterSpacing: -0.41 }}>{title}</Text>
                 <View className="flex-row items-center gap-1 mt-xs">
                   <MaterialIcons 
                     name={isHigh ? 'calendar-today' : 'help-outline'} 
                     size={14} 
                     color={colors.textSecondary} 
                   />
-                  <Text className="text-[13px] text-text-secondary">
+                  <Text className="text-[13px] text-text-secondary" style={{ letterSpacing: -0.08 }}>
                     {isHigh ? (dateStr || "") : isMedium ? "Review needed" : "Couldn't find a date"}
                   </Text>
                 </View>
@@ -150,7 +150,7 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
               accessibilityRole="button"
               accessibilityLabel={`Dismiss ${title}`}
             >
-              <Text className="text-[15px] text-text-secondary font-medium">Dismiss</Text>
+              <Text className="text-[15px] text-text-secondary font-medium" style={{ letterSpacing: -0.24 }}>Dismiss</Text>
             </Pressable>
             
             <Pressable 
@@ -160,7 +160,7 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
               accessibilityLabel={isHigh ? `Confirm ${title}` : isMedium ? `Review ${title}` : `Add date for ${title}`}
             >
               <MaterialIcons name={isHigh ? 'check' : 'edit'} size={18} color={accent} />
-              <Text className="text-[15px] text-text-primary font-medium">
+              <Text className="text-[15px] text-text-primary font-medium" style={{ letterSpacing: -0.24 }}>
                 {isHigh ? 'Confirm' : isMedium ? 'Review' : 'Add Date'}
               </Text>
             </Pressable>

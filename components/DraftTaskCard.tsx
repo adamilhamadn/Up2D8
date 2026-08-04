@@ -2,6 +2,7 @@ import { View, Text, Pressable, AccessibilityInfo } from 'react-native';
 import { useState, useEffect } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import { useTheme } from '../theme';
 
 interface DraftTaskCardProps {
   title: string;
@@ -12,6 +13,7 @@ interface DraftTaskCardProps {
 }
 
 export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss }: DraftTaskCardProps) {
+  const { colors, accent } = useTheme();
   const isHigh = confidence === 'high';
   const isMedium = confidence === 'medium';
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -53,7 +55,7 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
               <MaterialIcons 
                 name={isHigh ? 'calendar-today' : 'help-outline'} 
                 size={14} 
-                color="#8E8E93" 
+                color={colors.textSecondary} 
               />
               <Text className="text-[13px] text-text-secondary">
                 {isHigh ? (dateStr || "") : isMedium ? "Review needed" : "Couldn't find a date"}
@@ -79,7 +81,7 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
           accessibilityRole="button"
           accessibilityLabel={isHigh ? `Confirm ${title}` : isMedium ? `Review ${title}` : `Add date for ${title}`}
         >
-          <MaterialIcons name={isHigh ? 'check' : 'edit'} size={18} color="#FFFFFF" />
+          <MaterialIcons name={isHigh ? 'check' : 'edit'} size={18} color={accent} />
           <Text className="text-[15px] text-text-primary font-medium">
             {isHigh ? 'Confirm' : isMedium ? 'Review' : 'Add Date'}
           </Text>

@@ -4,8 +4,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { DraftTaskCard } from '../components/DraftTaskCard';
 import { ContextualBottomNav } from '../components/ContextualBottomNav';
 import * as Haptics from 'expo-haptics';
+import { useTheme } from '../theme';
 
 export default function DraftsInbox() {
+  const { colors } = useTheme();
+  
   return (
     <SafeAreaView className="flex-1 bg-bg" edges={['top']}>
       <View className="flex-row items-center justify-between px-md py-md border-b border-border z-40">
@@ -15,7 +18,7 @@ export default function DraftsInbox() {
           accessibilityRole="button"
           accessibilityLabel="Open menu"
         >
-          <MaterialIcons name="menu" size={24} color="#FFFFFF" />
+          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
         </Pressable>
         <Text className="text-[22px] font-bold tracking-tight text-text-primary">Drafts</Text>
         <Pressable 
@@ -24,7 +27,7 @@ export default function DraftsInbox() {
           accessibilityRole="button"
           accessibilityLabel="More options"
         >
-          <MaterialIcons name="more-vert" size={24} color="#FFFFFF" />
+          <MaterialIcons name="more-vert" size={24} color={colors.textPrimary} />
         </Pressable>
       </View>
 

@@ -2,8 +2,10 @@ import { View, Text, Pressable, AccessibilityInfo } from 'react-native';
 import { useState, useEffect } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import { useTheme } from '../theme';
 
 export function ContextualBottomNav() {
+  const { colors } = useTheme();
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export function ContextualBottomNav() {
         accessibilityRole="tab"
         accessibilityLabel="Timeline"
       >
-        <MaterialIcons name="calendar-today" size={24} color="#8E8E93" />
+        <MaterialIcons name="calendar-today" size={24} color={colors.textSecondary} />
         <Text className="text-[11px] font-medium text-text-secondary mt-1">Timeline</Text>
       </Pressable>
 
@@ -41,7 +43,7 @@ export function ContextualBottomNav() {
         accessibilityRole="tab"
         accessibilityLabel="Settings"
       >
-        <MaterialIcons name="settings" size={24} color="#8E8E93" />
+        <MaterialIcons name="settings" size={24} color={colors.textSecondary} />
         <Text className="text-[11px] font-medium text-text-secondary mt-1">Settings</Text>
       </Pressable>
     </View>

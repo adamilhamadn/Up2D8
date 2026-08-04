@@ -68,7 +68,12 @@ export default function DraftsInbox() {
         </View>
       </ScrollView>
 
-      <ContextualBottomNav />
+      <ContextualBottomNav 
+        primaryLabel="Confirm All (2)"
+        onPrimaryPress={() => {}}
+        leftItem={{ icon: "calendar-today", label: "Timeline", onPress: () => {} }}
+        rightItem={{ icon: "settings", label: "Settings", onPress: () => {} }}
+      />
     </SafeAreaView>
   );
 }

@@ -4,7 +4,21 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '../theme';
 
-export function ContextualBottomNav() {
+interface NavItem {
+  icon: keyof typeof MaterialIcons.glyphMap;
+  label: string;
+  onPress: () => void;
+}
+
+interface ContextualBottomNavProps {
+  primaryLabel: string;
+  primaryIcon?: keyof typeof MaterialIcons.glyphMap;
+  onPrimaryPress: () => void;
+  leftItem: NavItem;
+  rightItem: NavItem;
+}
+
+export function ContextualBottomNav({ primaryLabel, primaryIcon, onPrimaryPress, leftItem, rightItem }: ContextualBottomNavProps) {
   const { colors } = useTheme();
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -14,37 +28,46 @@ export function ContextualBottomNav() {
     return () => subscription.remove();
   }, []);
 
-  const handlePress = () => {
+  const handlePrimaryPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    onPrimaryPress();
+  };
+
+  const handleSidePress = (action: () => void) => {
+    Haptics.selectionAsync();
+    action();
   };
 
   return (
     <View className="absolute bottom-0 w-full h-[88px] bg-bg/90 border-t border-border px-md pb-md pt-sm flex-row justify-around items-center z-50">
       <Pressable 
+        onPress={() => handleSidePress(leftItem.onPress)}
         className="items-center justify-center w-16 active:opacity-50"
         accessibilityRole="tab"
-        accessibilityLabel="Timeline"
+        accessibilityLabel={leftItem.label}
       >
-        <MaterialIcons name="calendar-today" size={24} color={colors.textSecondary} />
-        <Text className="text-[11px] font-medium text-text-secondary mt-1">Timeline</Text>
+        <MaterialIcons name={leftItem.icon} size={24} color={colors.textSecondary} />
+        <Text className="text-[11px] font-medium text-text-secondary mt-1">{leftItem.label}</Text>
       </Pressable>
 
       <Pressable 
-        onPress={handlePress}
+        onPress={handlePrimaryPress}
         className={`flex-row items-center justify-center gap-2 bg-text-primary rounded-full px-6 py-3 shadow-lg active:opacity-80 ${!reduceMotion ? 'active:scale-95' : ''}`}
         accessibilityRole="button"
-        accessibilityLabel="Confirm all drafts"
+        accessibilityLabel={primaryLabel}
       >
-        <Text className="text-bg font-semibold text-[15px]">Confirm All (2)</Text>
+        {primaryIcon && <MaterialIcons name={primaryIcon} size={18} color={colors.bg} />}
+        <Text className="text-bg font-semibold text-[15px]">{primaryLabel}</Text>
       </Pressable>
 
       <Pressable 
+        onPress={() => handleSidePress(rightItem.onPress)}
         className="items-center justify-center w-16 active:opacity-50"
         accessibilityRole="tab"
-        accessibilityLabel="Settings"
+        accessibilityLabel={rightItem.label}
       >
-        <MaterialIcons name="settings" size={24} color={colors.textSecondary} />
-        <Text className="text-[11px] font-medium text-text-secondary mt-1">Settings</Text>
+        <MaterialIcons name={rightItem.icon} size={24} color={colors.textSecondary} />
+        <Text className="text-[11px] font-medium text-text-secondary mt-1">{rightItem.label}</Text>
       </Pressable>
     </View>
   );

@@ -5,7 +5,7 @@ import * as Haptics from 'expo-haptics';
 
 interface DraftTaskCardProps {
   title: string;
-  confidence: 'high' | 'low';
+  confidence: 'high' | 'medium' | 'low';
   dateStr?: string;
   onConfirm: () => void;
   onDismiss: () => void;
@@ -13,6 +13,7 @@ interface DraftTaskCardProps {
 
 export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss }: DraftTaskCardProps) {
   const isHigh = confidence === 'high';
+  const isMedium = confidence === 'medium';
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
@@ -35,6 +36,11 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
               className="w-2 h-2 rounded-full bg-text-primary mt-1.5 flex-shrink-0" 
               accessibilityLabel="High confidence extraction"
             />
+          ) : isMedium ? (
+            <View 
+              className="w-2 h-2 rounded-full bg-text-primary opacity-50 mt-1.5 flex-shrink-0" 
+              accessibilityLabel="Medium confidence, review needed"
+            />
           ) : (
             <View 
               className="w-2 h-2 rounded-full border border-text-tertiary mt-1.5 flex-shrink-0" 
@@ -50,7 +56,7 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
                 color="#8E8E93" 
               />
               <Text className="text-[13px] text-text-secondary">
-                {dateStr || "Couldn't find a date"}
+                {isHigh ? (dateStr || "") : isMedium ? "Review needed" : "Couldn't find a date"}
               </Text>
             </View>
           </View>
@@ -71,11 +77,11 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
           onPress={() => handlePress(onConfirm)}
           className={`bg-surface-raised px-lg py-sm rounded-full border border-border flex-row items-center gap-2 active:opacity-50 ${!reduceMotion ? 'active:scale-95' : ''}`}
           accessibilityRole="button"
-          accessibilityLabel={isHigh ? `Confirm ${title}` : `Add date for ${title}`}
+          accessibilityLabel={isHigh ? `Confirm ${title}` : isMedium ? `Review ${title}` : `Add date for ${title}`}
         >
           <MaterialIcons name={isHigh ? 'check' : 'edit'} size={18} color="#FFFFFF" />
           <Text className="text-[15px] text-text-primary font-medium">
-            {isHigh ? 'Confirm' : 'Add Date'}
+            {isHigh ? 'Confirm' : isMedium ? 'Review' : 'Add Date'}
           </Text>
         </Pressable>
       </View>

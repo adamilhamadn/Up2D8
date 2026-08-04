@@ -55,6 +55,13 @@ export default function DraftsInbox() {
             onConfirm={() => {}} 
             onDismiss={() => {}} 
           />
+          <DraftTaskCard 
+            title="English Essay Draft" 
+            confidence="medium" 
+            dateStr="Oct 28, 5:00 PM" 
+            onConfirm={() => {}} 
+            onDismiss={() => {}} 
+          />
         </View>
       </ScrollView>
 

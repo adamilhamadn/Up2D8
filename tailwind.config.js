@@ -6,20 +6,21 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}",
     "./theme/**/*.{js,jsx,ts,tsx}"
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
       colors: {
-        bg: '#000000',
-        surface: '#111111',
-        'surface-raised': '#1C1C1E',
-        border: '#2C2C2E',
-        'text-primary': '#FFFFFF',
-        'text-secondary': '#8E8E93',
-        'text-tertiary': '#48484A',
-        accent: '#8E8E93',
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        'surface-raised': 'var(--color-surface-raised)',
+        border: 'var(--color-border)',
+        'text-primary': 'var(--color-text-primary)',
+        'text-secondary': 'var(--color-text-secondary)',
+        'text-tertiary': 'var(--color-text-tertiary)',
+        accent: 'var(--color-accent)',
       },
       spacing: {
         xs: '4px',

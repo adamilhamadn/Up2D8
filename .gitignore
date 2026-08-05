@@ -43,3 +43,4 @@ yarn-error.*
 sandbox/
 
 .agents/
+docs/implementation_plan.md

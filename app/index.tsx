@@ -38,7 +38,6 @@ export default function DraftsInbox() {
         <View className="mb-lg">
           <Text 
             className="text-[15px] text-text-secondary leading-snug"
-            accessibilityRole="text"
             style={{ letterSpacing: -0.24 }}
           >
             Review and confirm AI-extracted deadlines before they hit your calendar.

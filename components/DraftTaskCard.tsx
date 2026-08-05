@@ -1,4 +1,4 @@
-import { View, Text, Pressable, AccessibilityInfo, Dimensions } from 'react-native';
+import { View, Text, Pressable, AccessibilityInfo } from 'react-native';
 import { useState, useEffect } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -6,7 +6,7 @@ import { useTheme } from '../theme';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS, interpolate, Extrapolation } from 'react-native-reanimated';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const OFFSCREEN_DISTANCE = 999;
 const SWIPE_THRESHOLD = 80;
 
 interface DraftTaskCardProps {
@@ -23,9 +23,7 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
   const isMedium = confidence === 'medium';
   const [reduceMotion, setReduceMotion] = useState(false);
 
-  // Gesture state
   const translateX = useSharedValue(0);
-  const [hapticFired, setHapticFired] = useState(false); // Ref equivalent in JS closure would be better but state works for simple flags, actually Reanimated worklets can't easily set state without runOnJS. Let's use a shared value for the haptic flag.
   const hasFiredHaptic = useSharedValue(0);
 
   useEffect(() => {
@@ -60,10 +58,10 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
     })
     .onEnd(() => {
       if (translateX.value > SWIPE_THRESHOLD) {
-        translateX.value = withSpring(SCREEN_WIDTH, { damping: 15, stiffness: 150 });
+        translateX.value = withSpring(OFFSCREEN_DISTANCE, { damping: 15, stiffness: 150 });
         runOnJS(onConfirm)();
       } else if (translateX.value < -SWIPE_THRESHOLD) {
-        translateX.value = withSpring(-SCREEN_WIDTH, { damping: 15, stiffness: 150 });
+        translateX.value = withSpring(-OFFSCREEN_DISTANCE, { damping: 15, stiffness: 150 });
         runOnJS(onDismiss)();
       } else {
         translateX.value = withSpring(0, { damping: 15, stiffness: 150 });
@@ -89,8 +87,8 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
       <View className="absolute inset-0 rounded-md overflow-hidden flex-row justify-between">
         {/* Right swipe (Confirm) reveal - left side */}
         <Animated.View 
-          className="flex-1 bg-[#34C759] justify-center pl-md"
-          style={rightRevealStyle}
+          className="flex-1 justify-center pl-md"
+          style={[{ backgroundColor: accent }, rightRevealStyle]}
         >
           <MaterialIcons name="check" size={24} color="#FFFFFF" />
         </Animated.View>

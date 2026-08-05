@@ -1,5 +1,8 @@
 # Up2D8
 
+> [!WARNING]  
+> **Under Development:** This project is currently in the early stages of development and is **not yet ready for use**.
+
 A minimalist student planner that turns messy syllabus screenshots and class chats into a clean timeline of deadlines.
 
 ## What It Does

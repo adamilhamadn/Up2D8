@@ -101,3 +101,36 @@ export async function clearAllData(): Promise<void> {
   await db.runAsync('DELETE FROM tasks');
   await db.runAsync('DELETE FROM sync_queue');
 }
+
+export async function syncTasksFromCloud(): Promise<void> {
+  const { supabase } = await import('../lib/supabase');
+  
+  // 1. Fetch pending tasks from cloud_tasks table
+  const { data, error } = await supabase
+    .from('cloud_tasks')
+    .select('*');
+
+  if (error || !data || data.length === 0) return;
+
+  // 2. Insert into local SQLite
+  const db = await getDatabase();
+  for (const cloudTask of data) {
+    const newTask: Omit<Task, 'id' | 'created_at' | 'updated_at'> = {
+      title: cloudTask.title,
+      description: cloudTask.description,
+      category: cloudTask.category,
+      course_code: cloudTask.course_code,
+      due_date: cloudTask.due_date,
+      confidence_score: cloudTask.confidence_score,
+      status: 'draft', // Force into Drafts
+      source: 'telegram'
+    };
+    
+    // We reuse our local createTask which also handles adding to the sync_queue if needed,
+    // though ideally we wouldn't sync back what we just pulled. For MVP it's fine.
+    await createTask(newTask);
+    
+    // 3. Delete from cloud so we don't pull it again
+    await supabase.from('cloud_tasks').delete().eq('id', cloudTask.id);
+  }
+}

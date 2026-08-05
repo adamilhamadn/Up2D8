@@ -22,6 +22,24 @@ export default function Layout() {
       });
   }, []);
 
+  useEffect(() => {
+    if (dbInitialized) {
+      const { syncTasksFromCloud } = require('../db/taskRepository');
+      import('react-native').then(({ AppState }) => {
+        // Sync on startup
+        syncTasksFromCloud().catch(console.error);
+        
+        // Sync on app resume
+        const sub = AppState.addEventListener('change', (state) => {
+          if (state === 'active') {
+            syncTasksFromCloud().catch(console.error);
+          }
+        });
+        return () => sub.remove();
+      });
+    }
+  }, [dbInitialized]);
+
   if (dbError) {
     return (
       <View style={{ flex: 1, backgroundColor: '#000', alignItems: 'center', justifyContent: 'center', padding: 20 }}>

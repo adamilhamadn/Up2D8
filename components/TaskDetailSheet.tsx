@@ -128,7 +128,7 @@ export function TaskDetailSheet({ task, visible, onClose, onEdit, onRemind, onCo
                           body: label === 'At due time' ? 'Due now!' : `Due in ${label.replace(' before', '')}`,
                           data: { taskId: task.id },
                         },
-                        trigger: triggerDate,
+                        trigger: triggerDate as any, // Expo notifications supports Date but TS typings can be weird
                       });
 
                       await createReminder({

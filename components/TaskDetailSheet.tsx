@@ -105,23 +105,36 @@ export function TaskDetailSheet({ task, visible, onClose, onEdit, onRemind, onCo
                         return;
                       }
 
-                      let triggerSeconds = 3600; // default 1 hour
-                      if (label === '1 day before') triggerSeconds = 86400;
-                      if (label === 'At due time') triggerSeconds = 0; // simplified
+                      if (!task.due_date) {
+                        alert('Task has no due date!');
+                        return;
+                      }
+
+                      let triggerDate = new Date(task.due_date);
+                      if (label === '1 hour before') {
+                        triggerDate = new Date(triggerDate.getTime() - 3600 * 1000);
+                      } else if (label === '1 day before') {
+                        triggerDate = new Date(triggerDate.getTime() - 86400 * 1000);
+                      }
                       
-                      // For mock, just fire in 10s
+                      if (triggerDate.getTime() <= Date.now()) {
+                        alert('That time has already passed!');
+                        return;
+                      }
+
                       const identifier = await Notifications.scheduleNotificationAsync({
                         content: {
                           title: task.title,
-                          body: `Due in ${label}`,
+                          body: label === 'At due time' ? 'Due now!' : `Due in ${label.replace(' before', '')}`,
+                          data: { taskId: task.id },
                         },
-                        trigger: { seconds: 10 } as any, // 10s for testing instead of real dates
+                        trigger: triggerDate,
                       });
 
                       await createReminder({
                         task_id: task.id,
                         os_notification_id: identifier,
-                        scheduled_for: new Date(Date.now() + 10000).toISOString(),
+                        scheduled_for: triggerDate.toISOString(),
                         status: 'active'
                       });
 

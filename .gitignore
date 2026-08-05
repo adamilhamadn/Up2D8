@@ -1,0 +1,25 @@
+node_modules
+.expo/
+dist/
+android/
+ios/
+*.env
+.env.*
+!.env.example
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# AI & Planning Artifacts
+.agents/
+.scratch/
+sandbox/
+docs/
+
+# Backend Secrets
+supabase/.temp/
+supabase/functions/.env

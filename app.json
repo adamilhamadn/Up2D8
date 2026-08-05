@@ -17,14 +17,51 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.up2d8"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-sqlite",
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "Allow Up2D8 to export tasks to your calendar."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Up2D8 to access your photos to scan deadlines.",
+          "cameraPermission": "Allow Up2D8 to take photos to scan deadlines."
+        }
+      ],
+      "expo-notifications",
+      [
+        "react-native-android-widget",
+        {
+          "widgets": [
+            {
+              "name": "Up2D8Widget",
+              "label": "Up2D8 Widget",
+              "minWidth": "40dp",
+              "minHeight": "40dp",
+              "description": "Tasks Widget",
+              "previewImage": "./assets/icon.png"
+            }
+          ]
+        }
+      ]
     ]
   }
 }

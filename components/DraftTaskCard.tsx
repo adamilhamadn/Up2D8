@@ -12,7 +12,7 @@ const SWIPE_THRESHOLD = 80;
 interface DraftTaskCardProps {
   title: string;
   confidence: 'high' | 'medium' | 'low';
-  dateStr?: string;
+  dateStr?: string | undefined;
   onConfirm: () => void;
   onDismiss: () => void;
 }

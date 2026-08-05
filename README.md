@@ -31,20 +31,6 @@ University students deal with deadlines scattered across Ulearn portals, Telegra
 | Backend | Supabase (Postgres + Edge Functions) |
 | AI | OpenAI GPT-4o-mini (text) + Vision API (screenshots) |
 
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Start the Expo development server
-npm start
-
-# Run on specific platforms
-npm run android
-npm run ios
-npm run web
-```
 
 ## Design Philosophy
 

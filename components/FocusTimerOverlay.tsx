@@ -76,6 +76,8 @@ export function FocusTimerOverlay({ task, visible, onClose }: FocusTimerOverlayP
   const handleComplete = () => {
     setIsRunning(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    // ponytail: status enum has no 'in_progress' — 'confirmed' is the active state
+    if (task) updateTaskStatus(task.id, 'confirmed');
     onClose();
   };
 

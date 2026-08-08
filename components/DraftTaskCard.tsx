@@ -84,23 +84,21 @@ export function DraftTaskCard({ title, confidence, dateStr, onConfirm, onDismiss
   return (
     <View className="mb-md relative">
       {/* Background Reveal Layers */}
-      <View className="absolute inset-0 rounded-md overflow-hidden flex-row justify-between">
-        {/* Right swipe (Confirm) reveal - left side */}
-        <Animated.View 
-          className="flex-1 justify-center pl-md"
-          style={[{ backgroundColor: accent }, rightRevealStyle]}
-        >
-          <MaterialIcons name="check" size={24} color="#FFFFFF" />
-        </Animated.View>
-        
-        {/* Left swipe (Dismiss) reveal - right side */}
-        <Animated.View 
-          className="flex-1 bg-text-secondary justify-center items-end pr-md"
-          style={leftRevealStyle}
-        >
-          <MaterialIcons name="archive" size={24} color="#FFFFFF" />
-        </Animated.View>
-      </View>
+      {/* Right swipe (Confirm) reveal - full background */}
+      <Animated.View 
+        className="absolute inset-0 rounded-md justify-center pl-md"
+        style={[{ backgroundColor: accent }, rightRevealStyle]}
+      >
+        <MaterialIcons name="check" size={24} color="#FFFFFF" />
+      </Animated.View>
+      
+      {/* Left swipe (Dismiss) reveal - full background */}
+      <Animated.View 
+        className="absolute inset-0 bg-text-secondary rounded-md justify-center items-end pr-md"
+        style={leftRevealStyle}
+      >
+        <MaterialIcons name="archive" size={24} color="#FFFFFF" />
+      </Animated.View>
 
       <GestureDetector gesture={panGesture}>
         <Animated.View 

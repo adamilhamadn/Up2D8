@@ -7,7 +7,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from '../theme';
 import { useEffect, useState } from 'react';
 import { initDatabase } from '../db';
-import { View, Text } from 'react-native';
+import { View, Text, AppState } from 'react-native';
+import { syncTasksFromCloud } from '../db/taskRepository';
 
 export default function Layout() {
   const [dbInitialized, setDbInitialized] = useState(false);
@@ -23,21 +24,16 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
-    if (dbInitialized) {
-      const { syncTasksFromCloud } = require('../db/taskRepository');
-      import('react-native').then(({ AppState }) => {
-        // Sync on startup
+    if (!dbInitialized) return;
+
+    syncTasksFromCloud().catch(console.error);
+
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
         syncTasksFromCloud().catch(console.error);
-        
-        // Sync on app resume
-        const sub = AppState.addEventListener('change', (state) => {
-          if (state === 'active') {
-            syncTasksFromCloud().catch(console.error);
-          }
-        });
-        return () => sub.remove();
-      });
-    }
+      }
+    });
+    return () => sub.remove();
   }, [dbInitialized]);
 
   if (dbError) {

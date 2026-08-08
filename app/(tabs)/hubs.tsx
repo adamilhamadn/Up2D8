@@ -19,7 +19,7 @@ const CATEGORIES = [
   { name: 'Info', icon: 'info', color: '#8E8E93' },
 ];
 
-function HubCard({ category, count, color, icon, onPress }: any) {
+function HubCard({ category, count, color, icon, progress, onPress }: any) {
   const { colors } = useTheme();
   const scaleAnim = React.useRef(new RNAnimated.Value(1)).current;
 
@@ -43,9 +43,8 @@ function HubCard({ category, count, color, icon, onPress }: any) {
           <View className="w-10 h-10 rounded-full items-center justify-center" style={{ backgroundColor: color + '20' }}>
             <MaterialIcons name={icon} size={20} color={color} />
           </View>
-          {/* Mock Progress Ring Placeholder */}
           <View className="w-8 h-8 rounded-full border-4 items-center justify-center" style={{ borderColor: color + '40' }}>
-             <Text className="text-[9px] font-bold" style={{ color }}>75%</Text>
+             <Text className="text-[9px] font-bold" style={{ color }}>{progress}%</Text>
           </View>
         </View>
         <Text className="text-[17px] font-bold text-text-primary mb-1">{category}</Text>
@@ -57,16 +56,15 @@ function HubCard({ category, count, color, icon, onPress }: any) {
 
 export default function HubsScreen() {
   const { colors } = useTheme();
-  const { tasks } = useTasks();
+  const { tasks, updateTaskStatus } = useTasks();
   const [search, setSearch] = useState('');
   const [selectedHub, setSelectedHub] = useState<string | null>(null);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [focusTask, setFocusTask] = useState<Task | null>(null);
   const [focusVisible, setFocusVisible] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
-  const { updateTaskStatus } = useTasks();
 
-  const confirmedTasks = tasks.filter(t => t.status === 'confirmed');
+  const confirmedTasks = tasks.filter(t => t.status === 'confirmed' || t.status === 'completed');
 
   if (selectedHub) {
     return (
@@ -125,8 +123,8 @@ export default function HubsScreen() {
           task={selectedTask}
           visible={!!selectedTask}
           onClose={() => setSelectedTask(null)}
-          onEdit={() => console.log('Edit')}
-          onRemind={() => console.log('Remind')}
+          onEdit={() => setSelectedTask(null)}
+          onRemind={() => setSelectedTask(null)}
           onComplete={() => { if(selectedTask) updateTaskStatus(selectedTask.id, 'completed'); setSelectedTask(null); }}
           onDelete={() => { if(selectedTask) updateTaskStatus(selectedTask.id, 'archived'); setSelectedTask(null); }}
           onStartFocus={() => { setFocusTask(selectedTask); setFocusVisible(true); }}
@@ -160,15 +158,21 @@ export default function HubsScreen() {
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="flex-row flex-wrap justify-between">
-          {CATEGORIES.map(cat => {
-            const count = confirmedTasks.filter(t => t.category === cat.name).length;
+          {CATEGORIES
+            .filter(cat => !search || cat.name.toLowerCase().includes(search.toLowerCase()))
+            .map(cat => {
+            const catTasks = confirmedTasks.filter(t => t.category === cat.name);
+            const completedCount = tasks.filter(t => t.category === cat.name && t.status === 'completed').length;
+            const totalCount = catTasks.length + completedCount;
+            const progress = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
             return (
               <HubCard 
                 key={cat.name}
                 category={cat.name}
-                count={count}
+                count={catTasks.length}
                 color={cat.color}
                 icon={cat.icon}
+                progress={progress}
                 onPress={() => setSelectedHub(cat.name)}
               />
             );

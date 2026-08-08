@@ -2,7 +2,7 @@ import { getDatabase } from './database';
 import { Task } from './types';
 import { nanoid } from 'nanoid/non-secure';
 
-export async function createTask(task: Omit<Task, 'id' | 'created_at' | 'updated_at'>): Promise<Task> {
+export async function createTask(task: Omit<Task, 'id' | 'created_at' | 'updated_at'>, options?: { skipSyncQueue?: boolean }): Promise<Task> {
   const db = await getDatabase();
   const id = nanoid();
   const now = new Date().toISOString();
@@ -19,24 +19,26 @@ export async function createTask(task: Omit<Task, 'id' | 'created_at' | 'updated
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       newTask.id,
-      newTask.user_id || null,
-      newTask.course_code || null,
+      newTask.user_id ?? null,
+      newTask.course_code ?? null,
       newTask.title,
-      newTask.description || null,
-      newTask.category || null,
-      newTask.due_date || null,
-      newTask.confidence_score || null,
-      newTask.source || null,
+      newTask.description ?? null,
+      newTask.category ?? null,
+      newTask.due_date ?? null,
+      newTask.confidence_score ?? null,
+      newTask.source ?? null,
       newTask.status,
       newTask.created_at,
       newTask.updated_at,
     ]
   );
   
-  await db.runAsync(
-    `INSERT INTO sync_queue (id, operation, table_name, record_id, payload, created_at) VALUES (?, ?, ?, ?, ?, ?)`,
-    [nanoid(), 'INSERT', 'tasks', newTask.id, JSON.stringify(newTask), now]
-  );
+  if (!options?.skipSyncQueue) {
+    await db.runAsync(
+      `INSERT INTO sync_queue (id, operation, table_name, record_id, payload, created_at) VALUES (?, ?, ?, ?, ?, ?)`,
+      [nanoid(), 'INSERT', 'tasks', newTask.id, JSON.stringify(newTask), now]
+    );
+  }
   
   return newTask;
 }
@@ -123,12 +125,11 @@ export async function syncTasksFromCloud(): Promise<void> {
       due_date: cloudTask.due_date,
       confidence_score: cloudTask.confidence_score,
       status: 'draft', // Force into Drafts
-      source: 'telegram'
+      source: 'Telegram'
     };
     
-    // We reuse our local createTask which also handles adding to the sync_queue if needed,
-    // though ideally we wouldn't sync back what we just pulled. For MVP it's fine.
-    await createTask(newTask);
+    // ponytail: skipSyncQueue prevents infinite pull→queue→push→pull loop
+    await createTask(newTask, { skipSyncQueue: true });
     
     // 3. Delete from cloud so we don't pull it again
     await supabase.from('cloud_tasks').delete().eq('id', cloudTask.id);

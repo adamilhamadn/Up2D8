@@ -40,11 +40,6 @@ function TabsWithContext() {
               label: 'Add Task',
               icon: 'add',
               onPress: () => setAddTaskVisible(true)
-            },
-            hubs: {
-              label: 'Browse',
-              icon: 'search',
-              onPress: () => console.log('Browse pressed')
             }
           }}
         />

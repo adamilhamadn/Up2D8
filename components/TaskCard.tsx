@@ -169,6 +169,12 @@ export function TaskCard({ task, onPress, onLongPress, onComplete, onArchive }: 
                 <View className="w-2 h-2 rounded-full" style={{ backgroundColor: urgency.color, opacity: urgency.opacity }} />
               </View>
               <View className="flex-row items-center">
+                {task.category && (
+                  <View 
+                    className="w-2 h-2 rounded-full mr-2" 
+                    style={{ backgroundColor: { Coursework: '#007AFF', Exam: '#FF3B30', Project: '#FF9500', Info: '#8E8E93' }[task.category] ?? colors.textSecondary }} 
+                  />
+                )}
                 {task.course_code && (
                   <Text className="text-[13px] text-text-secondary mr-2 font-medium">{task.course_code}</Text>
                 )}

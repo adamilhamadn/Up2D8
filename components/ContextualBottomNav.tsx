@@ -4,8 +4,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '../theme';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useRouter } from 'expo-router';
-
 type IconName = keyof typeof MaterialIcons.glyphMap;
 
 interface ContextualBottomNavProps extends BottomTabBarProps {
@@ -15,7 +13,6 @@ interface ContextualBottomNavProps extends BottomTabBarProps {
 export function ContextualBottomNav({ state, descriptors, navigation, primaryActions }: ContextualBottomNavProps) {
   const { colors, accent } = useTheme();
   const [reduceMotion, setReduceMotion] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);

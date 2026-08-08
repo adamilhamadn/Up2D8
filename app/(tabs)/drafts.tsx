@@ -5,7 +5,7 @@ import { DraftTaskCard } from '../../components/DraftTaskCard';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '../../theme';
 import { useTasks } from '../../db/TaskContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { processSmartPaste } from '../../utils/smartPaste';
 import { processSmartUpload } from '../../utils/smartUpload';
@@ -55,35 +55,19 @@ export default function DraftsInbox() {
     }
   };
 
-  // Handle milestone celebration
+  // Handle milestone celebration — fire only on transition from >0 to 0 drafts
+  const prevDraftCount = useRef(drafts.length);
   useEffect(() => {
-    // If we transition to 0 drafts from a non-zero state, celebrate
-    // (This is a simplified approach, can be refined to detect transitions accurately)
-    if (tasks.length > 0 && drafts.length === 0) {
+    if (prevDraftCount.current > 0 && drafts.length === 0) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
-  }, [drafts.length, tasks.length]);
+    prevDraftCount.current = drafts.length;
+  }, [drafts.length]);
 
   return (
     <SafeAreaView className="flex-1 bg-bg" edges={['top']}>
-      <View className="flex-row items-center justify-between px-md py-md border-b border-border z-40">
-        <Pressable 
-          className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" 
-          onPress={() => Haptics.selectionAsync()}
-          accessibilityRole="button"
-          accessibilityLabel="Open menu"
-        >
-          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
-        </Pressable>
+      <View className="flex-row items-center justify-center px-md py-md border-b border-border z-40">
         <Text className="text-[22px] font-bold tracking-tight text-text-primary" style={{ letterSpacing: 0.35 }}>Drafts</Text>
-        <Pressable 
-          className="w-11 h-11 items-center justify-center rounded-full active:opacity-50" 
-          onPress={() => Haptics.selectionAsync()}
-          accessibilityRole="button"
-          accessibilityLabel="More options"
-        >
-          <MaterialIcons name="more-vert" size={24} color={colors.textPrimary} />
-        </Pressable>
       </View>
 
       <ScrollView 

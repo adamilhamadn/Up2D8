@@ -4,6 +4,7 @@ import { useTheme } from '../theme';
 import { Task } from '../db/types';
 import Animated, { FadeIn, FadeOut, useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
 interface Block {
@@ -52,7 +53,7 @@ const DraggableBlock = ({ block, accent, updateBlock, onRemove }: { block: Block
       >
         <Text className="text-[13px] font-semibold flex-1" style={{ color: accent }}>{block.title}</Text>
         <Pressable onPress={() => onRemove(block.id)} className="p-1 -m-1">
-          <Text className="text-[11px]" style={{ color: accent }}>✕</Text>
+          <MaterialIcons name="close" size={14} color={accent} />
         </Pressable>
       </Animated.View>
     </GestureDetector>

@@ -173,8 +173,8 @@ export default function CalendarScreen() {
         task={selectedTask}
         visible={!!selectedTask}
         onClose={() => setSelectedTask(null)}
-        onEdit={() => console.log('Edit')}
-        onRemind={() => console.log('Remind')}
+        onEdit={() => setSelectedTask(null)}
+        onRemind={() => setSelectedTask(null)}
         onComplete={() => { if(selectedTask) updateTaskStatus(selectedTask.id, 'completed'); setSelectedTask(null); }}
         onDelete={() => { if(selectedTask) updateTaskStatus(selectedTask.id, 'archived'); setSelectedTask(null); }}
         onStartFocus={() => { setFocusTask(selectedTask); setFocusVisible(true); }}
